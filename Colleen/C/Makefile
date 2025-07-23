@@ -5,18 +5,18 @@ RM		= rm -f
 
 NAME	= Colleen
 
-MANDATORY_SRCS = Colleen.c
+SRC = Colleen.c
 
 all: $(NAME)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-$(NAME): ${MANDATORY_SRCS}
+$(NAME): ${SRC}
 	$(CC) $(CFLAGS) -o $@ $^
 
 fclean:
-	@$(RM) $(NAME)
+	$(RM) $(NAME)
 
 re: fclean all
 
