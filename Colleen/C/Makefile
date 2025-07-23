@@ -6,22 +6,18 @@ RM		= rm -f
 NAME	= Colleen
 
 MANDATORY_SRCS = Colleen.c
-MANDATORY_OBJS = $(MANDATORY_SRCS:.s=.o)
 
 all: $(NAME)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-$(NAME): $(MANDATORY_OBJS)
+$(NAME): ${MANDATORY_SRCS}
 	$(CC) $(CFLAGS) -o $@ $^
 
-clean:
-	@$(RM) $(MANDATORY_OBJS)
-
-fclean: clean
+fclean:
 	@$(RM) $(NAME)
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all fclean re
