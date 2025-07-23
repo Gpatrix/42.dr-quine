@@ -17,6 +17,7 @@ $(NAME): ${SRC}
 
 fclean:
 	$(RM) $(NAME)
+	$(RM) Grace_kid
 
 re: fclean all
 
