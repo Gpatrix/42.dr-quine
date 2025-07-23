@@ -14,7 +14,7 @@ all: $(NAME)
 	$(CASM) $(CFLAGS) -o $@ $<
 
 $(NAME): $(OBJ)
-	gcc -no-pie  -o $@ $^
+	gcc  -o $@ $^
 # ld -o $@ $^
 
 clean:

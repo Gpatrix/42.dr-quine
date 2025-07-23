@@ -1,25 +1,20 @@
+;hi
 global main
-
-section .data
-    msg db "salut", 10, 0
-
 extern printf
+
 section .text
 
 main:
-    push rbp
-    mov rbp, rsp
+push rbx
+lea rdi, [rel format]
+lea rsi, [rel format]
+mov rdx, 10
+mov rcx, 34
+xor rax, rax
+call printf wrt ..plt
+xor rax, rax
+pop rsi
+ret ;haaaaaa
 
-    mov rdi, msg
-    xor rax, rax
-    call printf wrt ..plt
-
-    mov rdi, msg
-    xor rax, rax
-    call printf wrt ..plt
-
-.exit:
-    pop rbp
-    mov rax, 60
-    mov rdi, 0
-    syscall
+format:
+db ";hi%2$cglobal main%2$cextern printf%2$c%2$csection .text%2$c%2$cmain:%2$cpush rbx%2$clea rdi, [rel format]%2$clea rsi, [rel format]%2$cmov rdx, 10%2$cmov rcx, 34%2$cxor rax, rax%2$ccall printf wrt ..plt%2$cxor rax, rax%2$cpop rsi%2$cret ;haaaaaa%2$c%2$cformat:%2$cdb %3$c%1$s%3$c, 0", 0
