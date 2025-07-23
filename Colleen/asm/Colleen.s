@@ -1,4 +1,4 @@
-global _start
+global main
 
 section .data
     msg db "salut", 10, 0
@@ -6,13 +6,20 @@ section .data
 extern printf
 section .text
 
-_start:
+main:
+    push rbp
+    mov rbp, rsp
 
     mov rdi, msg
+    xor rax, rax
+    call printf wrt ..plt
+
+    mov rdi, msg
+    xor rax, rax
     call printf wrt ..plt
 
 .exit:
-    add rsp, 8
+    pop rbp
     mov rax, 60
     mov rdi, 0
     syscall
