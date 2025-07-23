@@ -1,0 +1,2 @@
+#include <stdio.h>
+char*s="#include <stdio.h>%cchar*s=%c%s%c;/*hi all*/void do_nothing(void){printf(s,10,34,s,34);}int main(void){/* code */do_nothing();return 0;}";/*hi all*/void do_nothing(void){printf(s,10,34,s,34);}int main(void){/* code */do_nothing();return 0;}
