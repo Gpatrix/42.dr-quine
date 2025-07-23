@@ -6,3 +6,4 @@
 *.pdf
 *.a
 !Makefile
+**/.gdb_history
