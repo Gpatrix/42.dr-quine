@@ -7,3 +7,4 @@
 *.a
 !Makefile
 **/.gdb_history
+**/Sully_*.c
