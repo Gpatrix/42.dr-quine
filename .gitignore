@@ -7,6 +7,6 @@
 *.a
 !Makefile
 **/.gdb_history
-**/Sully_*.c
+**/Sully_*.*
 .vscode
 **/Grace_kid.*
