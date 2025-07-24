@@ -17,7 +17,7 @@ $(NAME): ${SRC}
 
 fclean:
 	$(RM) $(NAME)
-	$(RM) Grace_kid
+	$(RM) Grace_kid.c
 
 re: fclean all
 

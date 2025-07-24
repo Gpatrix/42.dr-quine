@@ -21,6 +21,7 @@ clean:
 
 fclean: clean
 	$(RM) $(NAME)
+	$(RM) Grace_kid.s
 
 re: fclean all
 
