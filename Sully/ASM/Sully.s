@@ -1,11 +1,18 @@
 global main
 extern dprintf
 extern sprintf
+extern system
 
 section .data
     file_name db "./Sully_X.s", 0
     file_exe  db "./Sully_X", 0
-    format db "test", 0
+
+section .rodata
+    cmd db "gcc -o %s %s", 0
+    format db "int main(void){return 0;}", 0
+
+section .bss
+    final_cmd resb 30
 
 section .text
 
@@ -24,6 +31,13 @@ main:
     lea rax, [rel file_exe]
     mov [rax+8], dl
 
+.prepare_cmd:
+    lea rdi, [rel final_cmd]
+    lea rsi, [rel cmd]
+    lea rdx, [rel file_exe]
+    lea rcx, [rel file_name]
+    call sprintf wrt ..plt
+
 .open:
     mov rax, 2
     lea rdi, [rel file_name]
@@ -33,6 +47,7 @@ main:
     cmp eax, 0
     jle .error
 
+.write:
     mov [rbp-4], eax
     mov edi, eax
     lea rsi, [rel format]
@@ -44,9 +59,18 @@ main:
     xor rax, rax
     call dprintf wrt ..plt
 
+.close:
     mov rax, 3
     mov edi, DWORD [rbp-4]
     syscall
+
+.comp:
+    lea rdi, [rel final_cmd]
+    call system wrt ..plt
+
+.exec:
+    lea rdi, [rel file_exe]
+    call system wrt ..plt
 
     xor rax, rax
     jmp .return
