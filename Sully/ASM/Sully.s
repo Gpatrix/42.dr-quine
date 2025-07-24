@@ -9,11 +9,11 @@ section .data
     file_bin  db "./Sully_X", 0
 
 section .rodata
-    cmd db "nasm -f elf64 -o %1$s %2$s && gcc -o %3$s %2$s", 0
-    format db "", 0
+    cmd db "nasm -f elf64 -o %2$s %3$s && gcc -o %1$s %2$s", 0
+    format db "hi", 0
 
 section .bss
-    cmp_cmd resb 30
+    cmp_cmd resb 87
 
 section .text
 
@@ -40,7 +40,8 @@ main:
     lea rdi, [rel cmp_cmd]
     lea rsi, [rel cmd]
     lea rdx, [rel file_bin]
-    lea rcx, [rel file_name]
+    lea rcx, [rel file_obj]
+    lea r8, [rel file_name]
     call sprintf wrt ..plt
 
 .open:
