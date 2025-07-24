@@ -5,14 +5,15 @@ extern system
 
 section .data
     file_name db "./Sully_X.s", 0
-    file_exe  db "./Sully_X", 0
+    file_obj db "./Sully_X.o", 0
+    file_bin  db "./Sully_X", 0
 
 section .rodata
-    cmd db "gcc -o %s %s", 0
-    format db "int main(void){return 0;}", 0
+    cmd db "nasm -f elf64 -o %1$s %2$s && gcc -o %3$s %2$s", 0
+    format db "", 0
 
 section .bss
-    final_cmd resb 30
+    cmp_cmd resb 30
 
 section .text
 
@@ -21,20 +22,24 @@ main:
     mov rbp, rsp
     sub rsp, 16
     mov dl, 5
-    add dl, '0'
+    cmp dl, byte 0
+    je .return
     mov [rbp-1], dl
 
 .prepare_file_name:
     mov dl, byte [rbp-1]
+    add dl, '0'
     lea rax, [rel file_name]
     mov [rax+8], dl
-    lea rax, [rel file_exe]
+    lea rax, [rel file_obj]
+    mov [rax+8], dl
+    lea rax, [rel file_bin]
     mov [rax+8], dl
 
 .prepare_cmd:
-    lea rdi, [rel final_cmd]
+    lea rdi, [rel cmp_cmd]
     lea rsi, [rel cmd]
-    lea rdx, [rel file_exe]
+    lea rdx, [rel file_bin]
     lea rcx, [rel file_name]
     call sprintf wrt ..plt
 
@@ -48,28 +53,28 @@ main:
     jle .error
 
 .write:
-    mov [rbp-4], eax
+    mov [rbp-5], eax
     mov edi, eax
     lea rsi, [rel format]
     lea rdx, [rel format]
     mov rcx, 10
     mov r8, 34
-    mov r9, [rbp-8]
+    mov r9, [rbp-1]
     dec r9
     xor rax, rax
     call dprintf wrt ..plt
 
 .close:
     mov rax, 3
-    mov edi, DWORD [rbp-4]
+    mov edi, DWORD [rbp-5]
     syscall
 
 .comp:
-    lea rdi, [rel final_cmd]
+    lea rdi, [rel cmp_cmd]
     call system wrt ..plt
 
 .exec:
-    lea rdi, [rel file_exe]
+    lea rdi, [rel file_bin]
     call system wrt ..plt
 
     xor rax, rax
