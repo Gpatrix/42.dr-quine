@@ -8,3 +8,4 @@
 !Makefile
 **/.gdb_history
 **/Sully_*.c
+.vscode

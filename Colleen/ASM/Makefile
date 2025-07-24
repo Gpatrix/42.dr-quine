@@ -15,7 +15,6 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	gcc  -o $@ $^
-# ld -o $@ $^
 
 clean:
 	$(RM) $(OBJ)
