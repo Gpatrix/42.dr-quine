@@ -5,7 +5,7 @@ start_define
 extern dprintf
 section .data
 file db file_name, ZERO
-format db "%%define start_define global main%3$c%%define file_name %2$cGrace_kid.s%2$c%3$c%%define ZERO 0%3$cstart_define%3$cextern dprintf%3$csection .data%3$cfile db file_name, ZERO%3$cformat db %2$ctest%2$c, ZERO%3$c%%macro lets_go 1%3$cst:%3$cpush rbx%3$cmov rbp, rsp%3$csub rsp, 16%3$c.open:%3$cmov rax, 2%3$clea rdi, [rel file]%3$cmov rsi, 0x241%3$cmov rdx, 0o644%3$csyscall%3$ccmp eax, 0%3$cjle .error%3$cmov [rbp-4], eax%3$cmov edi, eax%3$clea rsi, [rel format]%3$clea rdx, [rel format]%3$cmov rcx, 10%3$cmov r8, 34%3$cxor rax, rax%3$ccall dprintf wrt ..plt%3$cmov rax, 3%3$cmov edi, DWORD [rbp-4]%3$csyscall%3$cmov rax, %1%3$cjmp .return%3$c.error:%3$cmov rax, 1%3$c.return:%3$cadd rsp, 16%3$cpop rbx%3$cret ;haaaaaa%3$c%%endmacro%3$csection .text%3$cmain:%3$clets_go(0)", ZERO
+format db "%%define start_define global main%2$c%%define file_name %3$cGrace_kid.s%3$c%2$c%%define ZERO 0%2$cstart_define%2$cextern dprintf%2$csection .data%2$cfile db file_name, ZERO%2$cformat db %3$c%1$s%3$c, ZERO%2$c%%macro lets_go 1%2$cst:%2$cpush rbx%2$cmov rbp, rsp%2$csub rsp, 16%2$c.open:%2$cmov rax, 2%2$clea rdi, [rel file]%2$cmov rsi, 0x241%2$cmov rdx, 0o644%2$csyscall%2$ccmp eax, 0%2$cjle .error%2$cmov [rbp-4], eax%2$cmov edi, eax%2$clea rsi, [rel format]%2$clea rdx, [rel format]%2$cmov rcx, 10%2$cmov r8, 34%2$cxor rax, rax%2$ccall dprintf wrt ..plt%2$cmov rax, 3%2$cmov edi, DWORD [rbp-4]%2$csyscall%2$cmov rax, %%1%2$cjmp .return%2$c.error:%2$cmov rax, 1%2$c.return:%2$cadd rsp, 16%2$cpop rbx%2$cret ;haaaaaa%2$c%%endmacro%2$csection .text%2$cmain:%2$clets_go(0)", ZERO
 %macro lets_go 1
 st:
 push rbx
@@ -42,14 +42,3 @@ ret ;haaaaaa
 section .text
 main:
 lets_go(0)
-
-
-
-; The executable must be named Grace.
-; •When executed, the program writes in a file named Grace_kid.c/Grace_kid.s the
-; source code of the file used to compile the program.
-; •The source code must strickly contain
-; ◦No main declared.
-; ◦Three defines only.
-; ◦One comment.
-; •The program will run by calling a macro.
